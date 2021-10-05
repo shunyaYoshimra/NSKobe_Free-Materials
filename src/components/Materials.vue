@@ -28,7 +28,12 @@
             <span
               id="download"
               class="download-icon"
-              @click="downloadMedia(1, 'logo.png')"
+              @click="
+                downloadMedia(
+                  'https://shunyayoshimra.github.io/checkCORS/dist/logo.png',
+                  'logo.png'
+                )
+              "
             >
               <v-icon dark> mdi-cloud-upload </v-icon></span
             ></v-card-title
@@ -59,27 +64,18 @@ export default {
     },
   }),
   methods: {
-    downloadMedia(id, filename) {
+    downloadMedia(url, label) {
       axios
-        .post(
-          "https://shunyayoshimra.github.io/checkCORS/dist/logo.png",
-          {
-            id: id,
-            filename: filename,
-          },
-          {
-            responseType: "blob",
-          }
-        )
+        .get(url, { responseType: "blob" })
         .then((response) => {
-          const fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          const fileLink = document.createElement("a");
-          fileLink.href = fileURL;
-          fileLink.setAttribute("download", filename);
-          //fileLink.appendChild(document.createTextNode('test'));
-          document.body.appendChild(fileLink);
-          fileLink.click();
-        });
+          const blob = new Blob([response.data], { type: "application/pdf" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = label;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(console.error);
     },
   },
 };
