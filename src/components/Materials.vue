@@ -62,7 +62,7 @@ export default {
     downloadMedia(id, filename) {
       axios
         .post(
-          "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+          "https://shunyayoshimra.github.io/checkCORS/dist/logo.png",
           {
             id: id,
             filename: filename,
