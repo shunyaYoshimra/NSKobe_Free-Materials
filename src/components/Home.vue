@@ -11,6 +11,7 @@ export default {
     };
   },
   mounted() {
+    console.log("1");
     axios
       .get("/api/message")
       .then((res) => {
