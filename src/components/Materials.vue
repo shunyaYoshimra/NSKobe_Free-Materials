@@ -30,7 +30,7 @@
               class="download-icon"
               @click="
                 downloadMedia(
-                  'https://shunyayoshimra.github.io/checkCORS/dist/logo.png',
+                  'https://cdn.vuetifyjs.com/images/cards/cooking.png',
                   'logo.png'
                 )
               "
