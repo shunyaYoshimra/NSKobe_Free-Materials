@@ -44,6 +44,7 @@
               Small plates, salads & sandwiches - an intimate setting with 12
               indoor seats plus patio seating.
             </div>
+            s
           </v-card-text>
         </v-card>
       </template>
