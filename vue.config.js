@@ -3,7 +3,6 @@ module.exports = {
     'vuetify'
   ],
   devServer: {
-    port: 8080,
     proxy: {
       '/api': {
         target: "http://localhost:3000",
@@ -18,3 +17,5 @@ module.exports = {
     }
   }
 }
+
+console.log("this is from vue.config.js")
