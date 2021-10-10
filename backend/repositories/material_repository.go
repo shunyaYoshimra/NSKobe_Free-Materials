@@ -19,7 +19,7 @@ func (mr *MaterialRepository) RetrieveMaterials() (materials []database.Material
 }
 
 func (mr *MaterialRepository) RetrieveMaterialsByKeyword(keyword string) (materials []database.Material) {
-	mr.Conn.Where("tags LIKE ?", "%"+keyword+"%").Order("created_at desk").Find(&materials)
+	mr.Conn.Where("tags LIKE ?", "%"+keyword+"%").Order("created_at desc").Find(&materials)
 	return
 }
 

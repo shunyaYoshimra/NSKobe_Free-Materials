@@ -13,5 +13,8 @@ func NewRouter(g *gin.RouterGroup) {
 		g.GET("/materials", materialController.Index)
 		g.POST("/materials/:tags", materialController.Create)
 		g.DELETE("/materials", materialController.Delete)
+		g.POST("/download/:file-name", materialController.Download)
+		g.POST("/delete-file/:file-name", materialController.DeleteFile)
+		g.POST("/search/:keyword", materialController.Search)
 	}
 }

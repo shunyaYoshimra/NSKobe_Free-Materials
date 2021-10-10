@@ -4,12 +4,15 @@ import (
 	"errors"
 	"fmt"
 	"mime/multipart"
+	"bytes"
+  "log"
+	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-
+	"github.com/aws/aws-sdk-go/service/s3"
 )
 
 type AwsS3 struct {
@@ -83,3 +86,44 @@ func (a *AwsS3) Upload(file multipart.File, fileName string, extension string) (
 
 	return result.Location, nil
 }
+
+
+func DownloadConfigure(fileName string) {
+	filePath := "../dist/images/" + fileName
+	bucket := "golang-s3-test"
+	key := "images/" + fileName
+	awsRegion := "ap-northeast-1"
+
+	file, err := os.Create(filePath)
+  if err != nil {
+    log.Fatal(err)
+  }
+	newSession := session.Must(session.NewSessionWithOptions(session.Options{
+		SharedConfigState: session.SharedConfigEnable,
+	}))
+  svc := s3.New(newSession, &aws.Config{
+    Credentials: credentials.NewStaticCredentialsFromCreds(credentials.Value{
+      AccessKeyID: os.Getenv("AWS_ACCESS_KEY"),
+      SecretAccessKey: os.Getenv("AWS_SECRET_KEY"),
+    }),
+		Region: aws.String(awsRegion),
+	})
+	downloadKey := &s3.GetObjectInput{
+		// Bucket ダウンロードするS3のバケット名
+		Bucket: aws.String(bucket),
+		// Key ダウンロードするオブジェクト名
+		Key: aws.String(key),
+	}
+  image, err := svc.GetObject(downloadKey)
+	if err != nil {
+		log.Fatal(err)
+	}
+  buf := new(bytes.Buffer)
+	buf.ReadFrom(image.Body)
+  _, err = file.Write(buf.Bytes())
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("S3からダウンロードが完了しました。")
+}
+

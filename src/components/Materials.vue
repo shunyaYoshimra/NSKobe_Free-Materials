@@ -6,7 +6,13 @@
           <v-btn icon>
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
-          <input id="text2" type="text" placeholder="キーワードを入力" />
+          <input
+            v-model="keyword"
+            id="text2"
+            type="text"
+            placeholder="キーワードを入力"
+            @keyup.enter="search()"
+          />
           <i class="fas fa-times search_icon"></i>
         </div>
       </div>
@@ -34,7 +40,7 @@
               <span
                 id="download"
                 class="download-icon"
-                @click="downloadMedia('/dist/sample.gif', 'sample.gif')"
+                @click="downloadMedia(material.file_name)"
               >
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
@@ -71,6 +77,7 @@ export default {
     },
     awsPath: "https://golang-s3-test.s3.ap-northeast-1.",
     materials: [],
+    keyword: "",
   }),
   mounted() {
     axios.get("/api/materials").then((res) => {
@@ -81,18 +88,32 @@ export default {
     });
   },
   methods: {
-    downloadMedia(url, label) {
-      axios
-        .get(url, { responseType: "blob" })
-        .then((response) => {
-          const blob = new Blob([response.data], { type: "application/pdf" });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = label;
-          link.click();
-          URL.revokeObjectURL(link.href);
-        })
-        .catch(console.error);
+    downloadMedia(fileName) {
+      axios.post("/api/download/" + fileName).then((res) => {
+        console.log(res);
+        axios
+          .get("/app/images/" + fileName, { responseType: "blob" })
+          .then((response) => {
+            const blob = new Blob([response.data], { type: "application/pdf" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            axios.post("/api/delete-file/" + fileName).then((res) => {
+              console.log(res);
+            });
+          })
+          .catch(console.error);
+      });
+    },
+    search() {
+      axios.post("/api/search/" + this.keyword).then((res) => {
+        this.materials = [];
+        for (let i = 0; i < res.data.length; i++) {
+          this.materials.push(res.data[i]);
+        }
+      });
     },
   },
 };

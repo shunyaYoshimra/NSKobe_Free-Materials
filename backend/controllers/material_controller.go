@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/shunyaYoshimra/checkCORS/repositories"
 	"github.com/shunyaYoshimra/checkCORS/middleware"
-	// "strings"
+	"os"
 )
 
 var awsS3 *middleware.AwsS3
@@ -61,8 +61,24 @@ func (mc *MaterialController) Create(c *gin.Context) {
 	}
 }
 
-func (mc *MaterialController) Delete(c *gin.Context) {
+func (mc *MaterialController) Download(c *gin.Context) {
+	fileName := c.Param("file-name")
+	middleware.DownloadConfigure(fileName)
+	c.JSON(http.StatusOK, nil)
 }
 
-// http://localhost:3000/app/#/materials
-// http://localhost:3000/app/#/materials
+func (mc *MaterialController) DeleteFile(c *gin.Context) {
+	fileName := c.Param("file-name")
+	if err := os.Remove("../dist/images/" + fileName); err != nil {
+		panic(err)
+	}
+}
+
+func (mc *MaterialController) Search(c *gin.Context) {
+	keyword := c.Param("keyword")
+	materials := mc.Repository.RetrieveMaterialsByKeyword(keyword)
+	c.JSON(http.StatusOK, materials)
+}
+
+func (mc *MaterialController) Delete(c *gin.Context) {
+}
