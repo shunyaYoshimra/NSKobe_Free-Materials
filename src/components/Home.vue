@@ -1,26 +1,25 @@
 <template>
-  <div>{{ messageFromGo }}</div>
+  <div id="home">
+    <h2>フリー素材サイト</h2>
+    <p>Home page</p>
+  </div>
 </template>
 
+
 <script>
-import axios from "axios";
-export default {
-  data() {
-    return {
-      messageFromGo: "",
-    };
-  },
-  mounted() {
-    console.log("1");
-    axios
-      .get("/api/message")
-      .then((res) => {
-        console.log(res);
-        this.messageFromGo = res.data.message;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-};
+export default {};
 </script>
+
+<style>
+#home {
+  width: 70%;
+  margin: auto;
+}
+h2 {
+  margin-top: 10%;
+  text-align: center;
+}
+p {
+  text-align: center;
+}
+</style>

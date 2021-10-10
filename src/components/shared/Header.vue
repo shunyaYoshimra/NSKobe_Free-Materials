@@ -8,16 +8,18 @@
     >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Kobe CP Free Materials</v-toolbar-title>
+      <v-toolbar-title @click="changeRoute('/')"
+        >Kobe CP Free Materials</v-toolbar-title
+      >
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <v-btn icon @click="changeRoute('/materials')">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
+      <v-btn icon @click="changeRoute('/upload')">
+        <v-icon>mdi-cloud-upload</v-icon>
       </v-btn>
 
       <v-btn icon>
@@ -29,4 +31,14 @@
     </v-sheet>
   </v-card>
 </template>
+
+<script>
+export default {
+  methods: {
+    changeRoute(path) {
+      this.$router.push(path);
+    },
+  },
+};
+</script>
 

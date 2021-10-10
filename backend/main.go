@@ -1,18 +1,14 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/shunyaYoshimra/checkCORS/apps"
 )
 
 func main() {
-	fmt.Println("hello go")
-	engine:= gin.Default()
-    engine.GET("/api/message", func(c *gin.Context) {
-        c.JSON(http.StatusOK, gin.H{
-            "message": "hello Go",
-        })
-    })
-    engine.Run(":3000")
+	r:= gin.Default()
+	app := new(apps.Application)
+	app.CreateApp(r)
+	r.Run(":3000")
 }
+
