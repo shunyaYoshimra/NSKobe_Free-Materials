@@ -1,10 +1,10 @@
 <template>
   <div id="home">
-    <h2>フリー素材サイト</h2>
-    <p>Home page</p>
+    <h2 class="sub-title">フリー素材サイト</h2>
+    <p class="home-text">Home page</p>
     <br /><br />
 
-    <h3>プロジェクトメンバー</h3>
+    <h3 class="members-title">プロジェクトメンバー</h3>
     <p class="members">
       メインプログラマー : TA吉村<br />
       ちょこっとプログラマー : TA赤木<br />
@@ -33,16 +33,16 @@ export default {};
   width: 70%;
   margin: auto;
 }
-h2 {
+.home-text {
+  text-align: center;
+}
+.sub-title {
   margin-top: 10%;
   text-align: center;
 }
-h3 {
+.members-title {
   margin-top: 60%;
   text-align: left;
-}
-p {
-  text-align: center;
 }
 .members {
   text-align: left;

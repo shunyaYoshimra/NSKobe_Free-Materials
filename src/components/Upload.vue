@@ -9,6 +9,7 @@
     >
       <input type="hidden" name="time" :value="now" />
       <input type="hidden" name="extension" :value="extension" />
+
       <div
         id="upload"
         class="form-group commonStyle"
@@ -35,6 +36,7 @@
         <p v-show="preview">{{ name }}</p>
         <!-- ここまでプレビュー機能の部分 -->
       </div>
+      <p id="err-message">{{ errMessage }}</p>
       <v-combobox
         v-model="chips"
         chips
@@ -56,6 +58,13 @@
           </v-chip>
         </template>
       </v-combobox>
+      <input
+        placeholder="Enter Password to Upload"
+        class="password-field"
+        type="password"
+        v-model="password"
+      />
+      <p id="err-message">{{ errMessagePass }}</p>
       <div class="button-wrapper">
         <v-btn
           :loading="loading"
@@ -85,6 +94,10 @@ export default {
       chips: ["Kobe", "神戸", "フリー素材"],
       now: "00:00:00:00:00:000",
       extension: "",
+      attached: false,
+      errMessage: "",
+      password: "",
+      errMessagePass: "",
     };
   },
   mounted() {
@@ -120,6 +133,7 @@ export default {
   },
   methods: {
     uploadFile(event) {
+      this.attached = true;
       this.styleA = true;
       this.styleB = false;
       const files = event.target.files
@@ -149,8 +163,17 @@ export default {
       this.chips = [...this.chips];
     },
     clickUpload() {
-      this.loader = "loading";
-      setTimeout(() => document.myForm.submit(), 1000);
+      if (this.password === "ntutors") {
+        this.errMessagePass = "";
+        if (this.attached === true) {
+          this.loader = "loading";
+          setTimeout(() => document.myForm.submit(), 1000);
+        } else {
+          this.errMessage = "ファイルを選択して下さい";
+        }
+      } else {
+        this.errMessagePass = "パスワードが違います";
+      }
     },
   },
 };
@@ -227,5 +250,16 @@ export default {
 .button-wrapper {
   width: 60%;
   margin: auto;
+  margin-top: 20px;
+}
+#err-message {
+  color: tomato;
+  margin-left: 20%;
+  transform: translateY(20%);
+}
+.password-field {
+  margin-left: 20%;
+  width: 250px;
+  outline: 0;
 }
 </style>
