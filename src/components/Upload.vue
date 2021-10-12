@@ -66,6 +66,20 @@
         v-model="password"
         autocomplete="off"
       />
+      <input
+        type="password"
+        name="dummy1"
+        value=""
+        style="display: none"
+        disabled
+      />
+      <input
+        type="password"
+        name="dummy2"
+        value=""
+        style="display: none"
+        disabled
+      />
       <p id="err-message">{{ errMessagePass }}</p>
       <div class="button-wrapper">
         <v-btn
