@@ -6,6 +6,7 @@
       :action="getPath"
       method="post"
       enctype="multipart/form-data"
+      autocomplete="off"
     >
       <input type="hidden" name="time" :value="now" />
       <input type="hidden" name="extension" :value="extension" />
@@ -63,6 +64,7 @@
         class="password-field"
         type="password"
         v-model="password"
+        autocomplete="off"
       />
       <p id="err-message">{{ errMessagePass }}</p>
       <div class="button-wrapper">
