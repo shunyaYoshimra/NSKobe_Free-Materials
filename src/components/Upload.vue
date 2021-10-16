@@ -6,7 +6,6 @@
       :action="getPath"
       method="post"
       enctype="multipart/form-data"
-      autocomplete="off"
     >
       <input type="hidden" name="time" :value="now" />
       <input type="hidden" name="extension" :value="extension" />
@@ -62,23 +61,10 @@
       <input
         placeholder="Enter Password to Upload"
         class="password-field"
-        type="password"
+        type="text"
+        id="password"
         v-model="password"
-        autocomplete="off"
-      />
-      <input
-        type="password"
-        name="dummy1"
-        value=""
-        style="display: none"
-        disabled
-      />
-      <input
-        type="password"
-        name="dummy2"
-        value=""
-        style="display: none"
-        disabled
+        @click="changeType"
       />
       <p id="err-message">{{ errMessagePass }}</p>
       <div class="button-wrapper">
@@ -190,6 +176,9 @@ export default {
       } else {
         this.errMessagePass = "パスワードが違います";
       }
+    },
+    changeType() {
+      document.getElementById("password").setAttribute("type", "password");
     },
   },
 };

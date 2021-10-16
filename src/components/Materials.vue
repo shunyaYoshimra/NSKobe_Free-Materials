@@ -36,7 +36,6 @@
             <v-img class="card-img" height="250" :src="material.url"></v-img>
 
             <v-card-title>
-              フリー素材
               <span
                 id="download"
                 class="download-icon"
@@ -55,7 +54,7 @@
               <div>
                 <!-- Small plates, salads & sandwiches - an intimate setting with 12
                 indoor seats plus patio seating. -->
-                {{ material.tags }}
+                #{{ material.tags }}
               </div>
             </v-card-text>
           </v-card>
