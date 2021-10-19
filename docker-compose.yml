@@ -24,9 +24,9 @@ services:
       - ./tmp/mysql:/var/lib/mysql
     command: mysqld
 
-  # nginx:
-  #   build: nginx/.
-  #   ports: 
-  #     - 80:80
-  #   depends_on: 
-  #     - app
+  nginx:
+    build: nginx/.
+    ports: 
+      - 80:80
+    depends_on: 
+      - app
