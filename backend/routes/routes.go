@@ -16,5 +16,6 @@ func NewRouter(g *gin.RouterGroup) {
 		g.POST("/download/:file-name", materialController.Download)
 		g.POST("/delete-file/:file-name", materialController.DeleteFile)
 		g.POST("/search/:keyword", materialController.Search)
+		g.DELETE("/materials/:id", materialController.Delete)
 	}
 }

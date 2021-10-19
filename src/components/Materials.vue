@@ -38,7 +38,7 @@
             <v-card-title>
               <span
                 id="download"
-                class="download-icon"
+                class="download-icon icon"
                 @click="downloadMedia(material.file_name)"
               >
                 <v-tooltip top>
@@ -47,8 +47,50 @@
                   </template>
                   <span>ダウンロードする!!</span>
                 </v-tooltip>
-              </span></v-card-title
-            >
+              </span>
+              <v-icon class="delete-icon icon" @click="dialogID = material.id">
+                mdi-delete
+              </v-icon>
+              <template v-if="dialogID === material.id">
+                <div class="delete-dialog" @click="dialogID = -1"></div>
+                <v-card class="mx-auto delete-card" max-width="344" outlined>
+                  <v-list-item three-line>
+                    <v-list-item-content>
+                      <div class="text-overline mb-4">
+                        <input
+                          placeholder="Enter Password to Delete"
+                          class="delete-password-field"
+                          type="text"
+                          id="password"
+                          v-model="password"
+                        />
+                        <p>{{ errMessage }}</p>
+                      </div>
+
+                      <v-list-item-subtitle
+                        >削除したい場合にはTAに頼んでみましょう！</v-list-item-subtitle
+                      >
+                    </v-list-item-content>
+
+                    <v-list-item-avatar tile size="80" color="grey"
+                      ><img :src="material.url" alt=""
+                    /></v-list-item-avatar>
+                  </v-list-item>
+
+                  <v-card-actions>
+                    <v-btn
+                      @click="deleteMaterial(material.id)"
+                      outlined
+                      rounded
+                      text
+                      class="delete-btn"
+                    >
+                      削除</v-btn
+                    >
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-card-title>
 
             <v-card-text>
               <div>
@@ -69,6 +111,7 @@ import axios from "axios";
 import { mdiAccount } from "@mdi/js";
 export default {
   data: () => ({
+    dialogID: -1,
     loading: false,
     selection: 1,
     icons: {
@@ -77,6 +120,8 @@ export default {
     awsPath: "https://golang-s3-test.s3.ap-northeast-1.",
     materials: [],
     keyword: "",
+    password: "",
+    errMessage: "",
   }),
   mounted() {
     axios.get("/api/materials").then((res) => {
@@ -113,6 +158,17 @@ export default {
           this.materials.push(res.data[i]);
         }
       });
+    },
+    deleteMaterial(id) {
+      if (this.password === "ntutors") {
+        this.password = "";
+        this.dialog = false;
+        console.log(`ID: ${id}`);
+        axios.delete(`/api/materials/${id}`);
+        this.$router.go({ path: "/", force: true });
+      } else {
+        this.errMessage = "パスワードが違います";
+      }
     },
   },
 };
@@ -174,16 +230,50 @@ export default {
 .card-img:hover {
   opacity: 0.7;
 }
-.download-icon {
+.icon {
   color: #999;
   position: absolute;
-  right: 10px;
   cursor: pointer;
 }
-.download-icon:hover {
+.icon:hover {
   opacity: 0.7;
+}
+.download-icon {
+  right: 10px;
+}
+.delete-icon {
+  left: 290px;
 }
 .v-responsive__content {
   width: 1512px !important;
+}
+.delete-dialog {
+  padding: 20px;
+}
+.delete-password-field {
+  margin-top: 15px;
+  width: 250px;
+  outline: 0;
+}
+.delete-err-message {
+  color: tomato;
+}
+.delete-dialog {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: #000;
+  opacity: 0.4;
+}
+.delete-btn {
+  color: #1565c0 !important;
+}
+.delete-card {
+  position: absolute;
+  top: 70px;
+  z-index: 1001;
 }
 </style>

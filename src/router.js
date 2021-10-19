@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-// import Home from "./components/Home.vue";
+import Home from "./components/Home.vue";
 import Materials from "./components/Materials.vue";
 import Upload from "./components/Upload.vue";
 
@@ -15,6 +15,10 @@ export default new Router({
     {
       path: "/upload",
       component: Upload
+    },
+    {
+      path: "/ta_akagi",
+      component: Home
     }
   ]
 })

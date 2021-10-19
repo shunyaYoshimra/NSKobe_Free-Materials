@@ -8,6 +8,7 @@ import (
 	"github.com/shunyaYoshimra/checkCORS/repositories"
 	"github.com/shunyaYoshimra/checkCORS/middleware"
 	"os"
+	"strconv"
 )
 
 var awsS3 *middleware.AwsS3
@@ -57,7 +58,7 @@ func (mc *MaterialController) Create(c *gin.Context) {
 	if err := mc.Repository.Create(&material); err != nil {
 		c.JSON(http.StatusBadRequest, "Something wrong happened")
 	} else {
-		c.Redirect(http.StatusFound, "/app/#/materials")
+		c.Redirect(http.StatusFound, "/app/#/")
 	}
 }
 
@@ -81,4 +82,12 @@ func (mc *MaterialController) Search(c *gin.Context) {
 }
 
 func (mc *MaterialController) Delete(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	if material, err := mc.Repository.FindByID(id); err != nil {
+		panic(err)
+	} else if err := mc.Repository.Delete(material); err != nil{
+		panic(err)
+	} else {
+		c.Redirect(http.StatusFound, "/app/#/")
+	}
 }

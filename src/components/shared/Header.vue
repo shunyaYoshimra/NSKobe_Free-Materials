@@ -9,7 +9,9 @@
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
       <v-toolbar-title @click="changeRoute('/')"
-        >Kobe CP Free Materials</v-toolbar-title
+        ><span class="logo-title">Kobe CP Free Materials</span></v-toolbar-title
+      ><span @click="changeRoute('/ta_akagi')"
+        ><v-icon>mdi-face-man</v-icon></span
       >
 
       <v-spacer></v-spacer>
@@ -20,10 +22,6 @@
 
       <v-btn icon @click="changeRoute('/upload')">
         <v-icon>mdi-cloud-upload</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
     <v-sheet id="scrolling-techniques-7" class="overflow-y-auto">
@@ -42,3 +40,8 @@ export default {
 };
 </script>
 
+<style>
+.logo-title {
+  font-family: "Philosopher", sans-serif;
+}
+</style>
