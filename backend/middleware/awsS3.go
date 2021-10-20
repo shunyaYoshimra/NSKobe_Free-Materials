@@ -90,7 +90,7 @@ func (a *AwsS3) Upload(file multipart.File, fileName string, extension string) (
 
 func DownloadConfigure(fileName string) {
 	filePath := "../dist/images/" + fileName
-	bucket := "golang-s3-test"
+	bucket := "nskobe"
 	key := "images/" + fileName
 	awsRegion := "ap-northeast-1"
 
