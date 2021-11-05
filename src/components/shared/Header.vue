@@ -10,8 +10,6 @@
 
       <v-toolbar-title @click="changeRoute('/')"
         ><span class="logo-title">Kobe CP Free Materials</span></v-toolbar-title
-      ><span @click="changeRoute('/ta_akagi')"
-        ><v-icon>mdi-face-man</v-icon></span
       >
 
       <v-spacer></v-spacer>
